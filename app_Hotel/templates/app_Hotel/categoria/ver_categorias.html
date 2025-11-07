@@ -1,0 +1,44 @@
+{% extends 'app_Hotel/base.html' %}
+
+{% block title %}Ver Categorías{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="mb-0"><i class="fas fa-tags"></i> Listado de Categorías</h2>
+        <a href="{% url 'agregar_categoria' %}" class="btn btn-primary"><i class="fas fa-plus"></i> Nueva Categoría</a>
+    </div>
+
+    {% if categorias %}
+    <div class="table-responsive">
+        <table class="table table-hover table-striped shadow-sm">
+            <thead class="bg-dark text-white">
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Descripción</th>
+                    <th scope="col" class="text-center">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for categoria in categorias %}
+                <tr>
+                    <td>{{ categoria.id }}</td>
+                    <td>{{ categoria.nombre }}</td>
+                    <td>{{ categoria.descripcion|default:"Sin descripción" }}</td> 
+                    <td class="text-center">
+                        <a href="{% url 'actualizar_categoria' categoria.id %}" class="btn btn-warning btn-sm me-2" title="Editar"><i class="fas fa-edit"></i></a>
+                        <a href="{% url 'borrar_categoria' categoria.id %}" class="btn btn-danger btn-sm" title="Borrar"><i class="fas fa-trash-alt"></i></a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="alert alert-info text-center" role="alert">
+        No hay categorías registradas. <a href="{% url 'agregar_categoria' %}" class="alert-link">¡Agrega una ahora!</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
